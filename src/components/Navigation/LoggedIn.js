@@ -10,6 +10,8 @@ export default function LoggedIn() {
   const user = useSelector(selectUser);
   return (
     <>
+      <Nav.Link href="/my-space">My Space</Nav.Link>
+
       <Nav.Item style={{ padding: ".5rem 1rem" }}>{user.email}</Nav.Item>
       <Button onClick={() => dispatch(logOut())}>Logout</Button>
     </>
