@@ -1,32 +1,24 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { postStory } from "../../store/user/actions";
 
 export default function MySpace() {
   const [story, setstory] = useState({ form: false });
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [content, setcontent] = useState("");
   const [imageUrl, setimageUrl] = useState("");
+  const dispatch = useDispatch();
 
   const submit = (event) => {
     // to make sure that the form does not redirect (which is normal browser behavior)
     event.preventDefault();
 
-    // TODO:
-    // - dispatch an action that sends the new pizza to the store
-    // dispatch(
-    //   addPizza({
-    //     id: Math.random(),
-    //     name: name,
-    //     description: description,
-    //     bought: 0,
-    //     image: "",
-    //   })
-    // );
-    // - clear the input fields
+    dispatch(postStory(name, content, imageUrl.url));
 
-    setDescription("");
-    setName("");
     setimageUrl("");
+    setcontent("");
+    setName("");
   };
 
   /*Function to preview the image*/
@@ -58,8 +50,8 @@ export default function MySpace() {
                 Content:{" "}
                 <input
                   type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={content}
+                  onChange={(e) => setcontent(e.target.value)}
                 />
               </label>
             </p>
@@ -78,7 +70,11 @@ export default function MySpace() {
                 Preview Image
               </button>
 
-              {imageUrl.preview ? <img src={imageUrl.url}></img> : ""}
+              {imageUrl.preview ? (
+                <img src={imageUrl.url} alt=" uploaded by user"></img>
+              ) : (
+                ""
+              )}
             </p>
             <p>
               <button type="submit">Post!</button>
